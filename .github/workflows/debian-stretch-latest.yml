@@ -1,0 +1,32 @@
+name: "Build latest - Debian Stretch"
+on:
+  push:
+    branches:
+    - master
+    paths:
+    - 'src/root/**'
+    - 'src/Dockerfile-stretch'
+    - '.github/workflows/debian-stretch-latest.yml'
+  schedule:
+  - cron:  '30 1 1,15 * *'
+
+jobs:
+  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    
+    - name: Build php image
+      run: docker build -t "quay.io/sqlexception/debian:stretch-latest" -f src/Dockerfile-stretch src/
+   
+    - uses: azure/docker-login@v1
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      with:
+        login-server: quay.io
+        username: ${{ secrets.QUAY_IO_DOCKER_USERNAME }}
+        password: ${{ secrets.QUAY_IO_DOCKER_PASSWORD }}
+        
+    - name: "publish debian image to quay.io/sqlexception/debian:stretch-latest"
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: docker push "quay.io/sqlexception/debian:stretch-latest"
