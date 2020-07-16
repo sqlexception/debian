@@ -17,6 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
+    - name: run dockerfile linting
+      uses: brpaz/hadolint-action@master
+      with:
+        dockerfile:  "src/Dockerfile-buster"
+
     - name: run build
       run: docker build -t "quay.io/sqlexception/debian:buster-latest" -f src/Dockerfile-buster src/
 
