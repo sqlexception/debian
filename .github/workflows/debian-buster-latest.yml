@@ -20,10 +20,10 @@ jobs:
     - name: Build php image
       run: docker build -t "quay.io/sqlexception/debian:buster-latest" -f src/Dockerfile-buster src/
 
-    - name: run container structure tests
-      uses: plexsystems/container-structure-test-action@v0.1.0
+    - name: Container Structure Test Action
+      uses: plexsystems/container-structure-test-action@v0.2.0
       with:
-        image: "quay.io/sqlexception/debian:stretch-latest"
+        image: "quay.io/sqlexception/debian:buster-latest"
         config: container-structure-test.yml
    
     - uses: azure/docker-login@v1

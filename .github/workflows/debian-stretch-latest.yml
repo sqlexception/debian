@@ -20,8 +20,8 @@ jobs:
     - name: Build php image
       run: docker build -t "quay.io/sqlexception/debian:stretch-latest" -f src/Dockerfile-stretch src/
 
-    - name: run container structure tests
-      uses: plexsystems/container-structure-test-action@v0.1.0
+    - name: Container Structure Test Action
+      uses: plexsystems/container-structure-test-action@v0.2.0
       with:
         image: "quay.io/sqlexception/debian:stretch-latest"
         config: container-structure-test.yml
