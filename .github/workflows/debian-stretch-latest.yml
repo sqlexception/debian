@@ -17,6 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
+    - name: lint Dockerfile-stretch
+      uses: brpaz/hadolint-action@master
+      with:
+        dockerfile:  "src/Dockerfile-stretch"
+
     - name: run build
       run: docker build -t "quay.io/sqlexception/debian:stretch-latest" -f src/Dockerfile-stretch src/
 
