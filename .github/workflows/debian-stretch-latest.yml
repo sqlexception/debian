@@ -17,10 +17,10 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     
-    - name: Build php image
+    - name: run build
       run: docker build -t "quay.io/sqlexception/debian:stretch-latest" -f src/Dockerfile-stretch src/
 
-    - name: Container Structure Test Action
+    - name: run container structure tests
       uses: plexsystems/container-structure-test-action@v0.2.0
       with:
         image: "quay.io/sqlexception/debian:stretch-latest"
@@ -33,6 +33,6 @@ jobs:
         username: ${{ secrets.QUAY_IO_DOCKER_USERNAME }}
         password: ${{ secrets.QUAY_IO_DOCKER_PASSWORD }}
         
-    - name: "publish debian image to quay.io/sqlexception/debian:stretch-latest"
+    - name: "publish image to quay.io/sqlexception/debian:stretch-latest"
       if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       run: docker push "quay.io/sqlexception/debian:stretch-latest"
